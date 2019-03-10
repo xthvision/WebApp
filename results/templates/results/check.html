@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+    
+    </style>
+
+    <h1>Test a new Image</h1>
+    <h4 style="color: red;"> {{error}}</h4>
+    <br/>
+    <form method="POST" action="{% url 'check' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        Title: <br/>
+        <input type="text" name="title"><br/>
+        Solvent Medium: <br/>
+        <input type="text" name="medium"/><br/>
+        <br/>
+        Compound: <br/>
+        <input type="text" name="compound"/><br/>
+        <br/>
+        Other Deatils <br/>
+        <input type="textbox" name="detail"><br/>
+        Image: <br/>
+        <input type="file" name="image"><br/>
+    </br>
+        <input type="submit" value="Upload" class="btn btn-primary"/>
+
+    </form>
+
+
+{% endblock %}

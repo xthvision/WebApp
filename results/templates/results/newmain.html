@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .mycard{
+        margin: 2%;
+        background-color: #e3e7ed;
+        border-radius: 10px;
+        padding: 2%;
+    }
+    .mycardin{
+        padding: 4%;
+        background-color: #e3e7ed;
+    }
+    .myrow{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pass-button{
+        background-color: green
+    }
+    .fail-button{
+        background-color: red
+    }
+    body{
+        background: linear-gradient(150deg, white , #cfd1d3, #343a40);
+    }
+    .my-btn{
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script> -->
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<br/>
+<h1 class="text-center">All results uptill now calculated by you!!</h1>
+<br/>
+<a href="{% url 'check' %}">
+    <button class="btn btn-primary btn-block my-btn col-6 col-sm-8 col-md-5 col-lg-5 col-xs-10 my-btn">Calculate on new Compound</button>
+</a>
+<br/>
+
+<div class="row myrow col-12">
+    {% for result in results.all %}
+    <div class="col-3 mycard">
+        <div class="card mycardin" >
+            <h7>Output of the model analysis {{ result.outputval }} </h7>
+            <!-- <img src="http://onlinestatbook.com/2/graphing_distributions/line_graphs_files/image004.jpg" style="width: 100%; height: 100%;"/> -->
+            <!--<canvas id="canvas" width="100%" height="100%" class="chartjs-render-monitor" style="display: block; width: 100%; height: 100%;"></canvas> -->
+            <!-- <canvas id="myChart" width="500" height="300"></canvas> -->
+            <!-- <div id="chartContainer{{ result.id }}" style="height: 300px; width: 100%;"> </div> -->
+            <!-- div id="chartContaine" style="height: 100%; width: 100%;"> </div> -->
+            <canvas id="{{result.id}}" width="400" height="400"></canvas>
+            <p>calculated on {{result.pub_date}}</p>
+            <p>calculated by {{result.uploader}}</p>
+            <a href="result.pdf.url"> See the pdf</a>
+            {% if result.boolval %}
+            <button type="button" class="btn btn-primary pass-button" >Passed</button>
+            {% else %}
+            <button type="button" class="btn btn-primary fail-button" >Failed</button>
+            {% endif %}
+        </div>
+    </div>
+    <!-- <script type="text/javascript">
+        window.onload = function () {
+          var chart = new CanvasJS.Chart("https://www.chartjs.org/docs/latest/",
+          {
+              aa gaya mera
+            title:{
+            text: "Chromatogram Comparison    "  
+            },
+            data: [
+              {        
+              type: "line",
+              dataPoints: [
+              { x: 10, y: 45 },
+              { x: 20, y: 50},
+              { x: 30, y: 40 },
+              { x: 40, y: 45 },
+              { x: 50, y: 45 },
+              { x: 60, y: 48 },
+              { x: 70, y: 43 },
+              { x: 80, y: 41 },
+              { x: 90, y: 28}
+            
+              ]
+            },
+              {        
+              type: "line",
+              dataPoints: [
+              { x: 10, y: 71 },
+              { x: 20, y: 55},
+              { x: 30, y: 50 },
+              { x: 40, y: 65 },
+              { x: 50, y: 95 },
+              { x: 60, y: 68 },
+              { x: 70, y: 28 },
+              { x: 80, y: 34 },
+              { x: 90, y: 14}
+            
+              ]
+            }
+            ]
+          });
+      
+          chart.render();
+        }
+        </script> -->
+
+
+<script>
+var ctx = document.getElementById("{{result.id}}").getContext('2d');
+ var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+}); 
+
+
+/* var myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'My First dataset',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [10, 30, 50, 20, 25, 44, -10],
+					fill: false,
+				}, {
+					label: 'My Second dataset',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+					data: [100, 33, 22, 19, 11, 49, 30],
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Min and Max Settings'
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 10,
+							max: 50
+						}
+					}]
+				}
+			}
+		}); */
+	/*	var config = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'My First dataset',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [10, 30, 50, 20, 25, 44, -10],
+					fill: false,
+				}, {
+					label: 'My Second dataset',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+					data: [100, 33, 22, 19, 11, 49, 30],
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Min and Max Settings'
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							min: 10,
+							max: 50
+						}
+					}]
+				}
+			}
+		}); */
+	
+
+</script>
+
+<script>
+
+    data: [20, 10]
+    data: [{
+        x: 10,
+        y: 20
+    }, {
+        x: 15,
+        y: 10
+    }]
+
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+
+
+</script>
+
+    {% endfor %}
+</div>
+
+<!--<script>
+    var config = {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My First dataset',
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                data: [10, 30, 50, 20, 25, 44, -10],
+                fill: false,
+            }, {
+                label: 'My Second dataset',
+                fill: false,
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                data: [100, 33, 22, 19, 11, 49, 30],
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Min and Max Settings'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 10,
+                        max: 50
+                    }
+                }]
+            }
+        }
+    };
+
+    window.onload = function() {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    };
+</script>  -->
+<script type="text/javascript">
+    $( document ).ready(function() {
+        var data = {
+            labels: ['1', '5', '10', '15', '20', '25', '30'],
+            datasets: [
+                {
+                    label: "Site Registrations in the Last 30 Days",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: {{ 30_day_registrations }}
+                }
+            ]
+        };
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myLineChart = new Chart(ctx).Line(data);
+    });
+</script>
+{% endblock %}

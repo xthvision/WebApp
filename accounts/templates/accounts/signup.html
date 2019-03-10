@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .fom{
+        margin-left: auto; 
+        margin-right: auto;
+        border:1px solid black;
+        padding: 4%;
+        border-radius: 20px;  
+        box-shadow: 8px 12px grey;
+        background: linear-gradient(150deg, white , #cfd1d3, #343a40);
+        }
+    </style>
+    
+    <h4 style="color: red;"> {{error}}</h4>
+    <br/>
+    <div class="col-5  fom">
+        <h1>Signup</h1>
+        
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div>
+
+            </div>
+            <label>Username:</label> 
+            <input type="text" name="username" class="form-control">
+            <label>Email:</label>
+            <input type="email" name="email" class="form-control">
+            <label>Password: </label>
+            <input type="password" name="password" class="form-control"/>            <label>Confirm Password: </label>
+            <input type="password" name="passwordconfirm" class="form-control"/><br/>
+            
+            <input type="submit" value="sign Up !" class="btn btn-primary"/>
+        </form>
+    </div>
+
+{% endblock %}

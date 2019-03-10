@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        .fom{
+        margin-left: auto; 
+        margin-right: auto;
+        border:1px solid black;
+        padding: 4%;
+        border-radius: 10px;  
+        background-color: #e6e9ef;
+        background: linear-gradient(150deg, white , #cfd1d3, #343a40);
+        }
+    </style>
+
+    <br/>
+    <div class="fom col-xs-10 col-sm-6 col-md-6 col-lg-5">
+        <h1>Run model on a new compound</h1>
+        <h4 style="color: red;"> {{error}}</h4>
+        <br/>
+        <form method="POST" action="{% url 'compoundtwo' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Chose pdf output:</label>
+            <input  class="form-control-file" type="file" name="pdf" class="" value="chose file 1"> <br/>
+            <label>Chose word document:</label>
+            <input class="form-control-file" type="file" name="word" class="" value="chose file 2"> <br/>
+            
+            <input type="submit" value="Check" class="btn btn-primary"/>
+        </form>
+    </div>
+
+{% endblock %}

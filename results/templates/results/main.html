@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br/>
+<h1>Home!! this is where all results uptill now will be shown.</h1>
+<br/>
+<a href="{% url 'check' %}">
+    <button class="btn btn-primary btn-lg btn-block">Calculate on new Compound</button>
+</a>
+<br/>
+{% for result in results.all %}
+<h4>{{ result.title }}</h4>
+
+<img src="{{ result.image.url }}" class="img-fluid">
+<h3>Output of model {{ result.outputval }} </h3>
+
+{% endfor %}
+
+{% endblock %}

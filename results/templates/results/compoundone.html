@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+
+    <h1>Test a new Image</h1>
+    <h4 style="color: red;"> {{error}}</h4>
+    <br/>
+    <form method="POST" action="{% url 'compoundone' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        Title: <br/>
+        <input type="text" name="title">
+        <br/>
+        <br/>
+        Compound: <br/>
+        <input type="text" name="compound"/><br/>
+        <br/>
+        Acetone level: <br/>
+        <input type="text" name="acetone"/><br/>
+        <br/>
+        Cyclo Hexane level: <br/>
+        <input type="text" name="cyclohex"/><br/>
+        <br/>
+        Ethyl Acetate level: <br/>
+        <input type="text" name="eacetate"/><br/>
+        <br/>
+        Methanol level: <br/>
+        <input type="text" name="methanol"/><br/>
+        <br/>
+
+        Other Deatils <br/>
+        <input type="textbox" name="detail"><br/>
+        <br/>
+        Image: <br/>
+        <input type="file" name="image"> <br/>
+        <br/>
+        <input type="submit" value="Check" class="btn btn-primary"/>
+        <br/>
+    </br>
+
+    </form>
+
+
+{% endblock %}
